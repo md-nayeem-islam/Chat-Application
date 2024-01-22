@@ -1,0 +1,96 @@
+.loginContant{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.loginHeading{
+    font-size: 32px;
+    width: 377px;
+}
+
+.loginWithGoogle{
+    border: 1px solid rgb(148, 148, 148);
+    padding: 20px 30px;
+    border-radius: 10px;
+    display: inline-flex; 
+    gap: 10px;
+    margin-top: 30px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.loginWithGoogle span{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.googleIcon{
+    font-size: 26px;
+}
+.loginInformation{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.loginEmail{
+    width: 377px;
+}
+.loginPassword{
+    width: 377px;
+}
+.loginIcon{
+    position: absolute;
+    display: flex;
+    top: 98px;
+    right: 18px;
+}
+
+.loginBtn button{
+    margin-top: 50px;
+    background: #5F34F5 !important;
+    width: 377px;
+    border-radius: 10px;
+    padding: 18px;
+    font-size: 16px;
+}
+.dontHaveAcount{
+    font-size: 18px;
+    margin-top: 30px;
+    display: inline-block;
+}
+.navAuthentication{
+    margin-top: 30px;
+    font-size: 18px;
+}
+.navAuthentication a{
+    color: #EA6C00;
+    text-decoration: none;
+    margin-left: 10px;
+
+}
+
+.imgContainar{
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    object-fit: contain;
+    background-color: aqua;
+}
+.imgContainar img{
+ height: 100vh;
+ width: 100%;
+ object-fit: cover;
+ overflow: hidden;
+}
+.from-errors{
+    color: rgb(207, 5, 5);
+    margin-top: 8px;
+}

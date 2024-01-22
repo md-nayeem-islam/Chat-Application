@@ -1,0 +1,38 @@
+.sideBarBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 20px 0;
+}
+.sidebarImg{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.sidebarImg img{
+    height: 100%;
+    width: 100%;
+    object-fit:cover;
+    overflow: hidden;
+}
+.navigation{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.navigation li a{
+    font-size: 45px;
+    color: aliceblue;
+    display: inline-block;
+    border-radius: 10px 0 0 10px;
+    padding: 10px 50px 10px 15px;
+    margin-left: 30px;
+}
+.navigation li a.active{
+    background-color: aliceblue;
+    color: #5F35F5;
+    border-radius: 8px 0 0 8px;
+}

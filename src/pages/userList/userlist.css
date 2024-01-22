@@ -1,0 +1,42 @@
+.userimgBox{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.usermainbox{
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 5px;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.userimgBox img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.userItem{
+    display: flex;
+    align-items: center;
+}
+.userinfo{
+    flex-basis: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 13px;
+}
+.userinfo h4{
+    font-size: 20px;
+}
+.userinfo p{
+    font-size: 15px;
+    opacity: 0.8;
+}
+.userbtn{
+    background-color: #5F35F5;
+    padding: 8px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
