@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Login from '../src/pages/login/Login'
 import Registation from '../src/pages/registation/Registation'
@@ -17,6 +15,7 @@ import {
 import Message from './pages/message/Message'
 import Settings from './pages/settings/Settings'
 import Notification from './pages/notification/Notification'
+import Protected from './Component/Protected'
 
 
 const router = createBrowserRouter(
@@ -24,12 +23,14 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<Login />}/>
       <Route path="/Registation" element={<Registation/>}/>
+      {/* <Route path='/' element={< Protected/>}> */}
       <Route element={<RootLayout/>}>
         <Route path="/home" element={<Home/>}/>
         <Route path='/message' element={<Message/>}/>
         <Route path='/notification' element={<Notification/>}/>
         <Route path='/settings' element={<Settings/>}/>
       </Route>
+      {/* </Route> */}
 
     </>
   )
@@ -46,3 +47,8 @@ function App() {
 }
 
 export default App
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <RouterProvider router={router}/>
+// );
+

@@ -1,7 +1,7 @@
 import React from 'react'
 import GroupCard from '../../Component/home/groupCard/GroupCard'
 import group from '../../images/group.jpg'
-import './Grouplist.css'
+import './grouplist.css'
 
 const GroupList = () => {
   return (

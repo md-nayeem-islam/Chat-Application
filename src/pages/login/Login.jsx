@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import './login.css'
 import Button from '@mui/material/Button';
@@ -13,6 +13,9 @@ import { useFormik} from 'formik';
 import { singUpSchema} from '../../schema/Index';
 import { IoEyeOutline, IoEyeOffOutline} from "react-icons/io5";
 import Navauthentication from '../../Component/Navauthentication';
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -26,15 +29,44 @@ const Item = styled(Paper)(({ theme }) => ({
 const initialValues = {
   email:"",
   password:"",
+  name : '',
 }
 
 export default function BasicGrid() {
+
+  const auth = getAuth();
+  const navigate = useNavigate();
 
   const {values, errors, touched, handleChange, handleBlur, handleSubmit} = useFormik({
     initialValues,
     validationSchema : singUpSchema,
     onSubmit : (values, action) => {
-      console.log(values);
+      signInWithEmailAndPassword(auth, values.email, values.password).then((userCredential) =>{
+        if(userCredential.user.emailVerified){
+          navigate('./home')
+        }else{
+          signOut(auth).then(() => {
+            console.log('signOut done');          
+            toast.error('🦄 Email not verifide', {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+          })
+        }
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+    
+      // console.log(values);
       action.resetForm();
     }
   });
@@ -54,12 +86,26 @@ export default function BasicGrid() {
 
 
   return (
+
+    <>
+      <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="dark"
+      />
+    
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <div className='loginContant'>
             <div className="containarWrapper">
-
               <h2 className='loginHeading'>Login to your account!</h2>
               <div className="loginWithGoogle">
                   < FcGoogle  className='googleIcon'/>
@@ -67,13 +113,19 @@ export default function BasicGrid() {
               </div>
               <form onSubmit={handleSubmit}>
                 <div className="loginInformation">
-                  <div><TextField  className='loginEmail' id="standard-basic" label="Email Addres" variant="standard" name='email' type='email' value={values.email} onChange={handleChange} onBlur={handleBlur}/>
-                  {errors.email && touched.email ?(<p className='from-errors'>{errors.email}</p>):null}
-                  </div>
-                  <div><TextField  className='loginPassword' id="standard-basic" label="Password" variant="standard" type={passwordType} name='password' value={values.password} onChange={handleChange} onBlur={handleBlur}/>
+                <div><TextField  className='loginEmail' id="loginEmail" label="Email Addres" variant="standard" type='email' name='email' value={values.email} onChange={handleChange} onBlur={handleBlur}/>
+                    { errors.email && touched.email ?(<p className='registation-error'>{errors.email}</p>) :null}
+                    </div>
+
+                    <div><TextField  className='loginName' id="loginName" label="Full Name" variant="standard" name='name' type='name' value={values.name} onChange={handleChange} onBlur={handleBlur} />
+                    { errors.name && touched.name ?(<p className='registation-error'>{errors.name}</p>) :null}
+                    </div>
+                  
+                  <div><TextField  className='loginPassword' id="standard" label="Password" variant="standard" type={passwordType} name='password' value={values.password} onChange={handleChange} onBlur={handleBlur}/>
                   {errors.password && touched.password ?(<p className='from-errors'>{errors.password}</p>):null}
                   <span className='loginIcon' onClick={handelToggle}>{passwordIcon}</span>
                   </div>
+                  
                 </div>
                 <div className="loginBtn">
                   <Button variant="contained" type='submit'>Login to Continue</Button>
@@ -92,5 +144,6 @@ export default function BasicGrid() {
         </Grid>
       </Grid>
     </Box>
+    </>
   );
 }

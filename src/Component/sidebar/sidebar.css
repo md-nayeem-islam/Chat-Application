@@ -1,16 +1,35 @@
+
 .sideBarBox{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     height: 100vh;
     padding: 20px 0;
+    gap: 50px;
 }
+.img{
+    position: relative;
+}
+.sidbarName{
+    margin-top: 10px;
+    color: #ffffff;
+    position: absolute;
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
 .sidebarImg{
     height: 100px;
     width: 100px;
     border-radius: 50%;
     overflow: hidden;
+    
+}
+.sideBarBox ul li{
+    position: block;
 }
 .sidebarImg img{
     height: 100%;
@@ -19,7 +38,7 @@
     overflow: hidden;
 }
 .navigation{
-    display: flex;
+    display:flex;
     flex-direction: column;
     gap: 50px;
 }
