@@ -2,19 +2,18 @@ import React from 'react'
 import '../sidebar/sidebar.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logout from '../../images/logout.png'
-// import user from '../../images/loginuser.jpg'
 import { IoHomeOutline } from "react-icons/io5";
 import { AiOutlineMessage } from "react-icons/ai";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { auth } from '../../firebase/FirebaseConfig'
 import { signOut, getAuth } from '@firebase/auth'
-//  import userimg from '../../images/photo.png'
+import { useSelector } from 'react-redux';
 
 
 
 const Sidebar = () => {
-
+ const data = useSelector((state) => state.loginUserData.value) 
  const navigate = useNavigate();
  const auth = getAuth();
 
@@ -27,14 +26,16 @@ const Sidebar = () => {
     
   }
   const userInfo = auth.currentUser;
+  const a = localStorage.getItem('user') 
+  // console.log(a);
   return (
     <>
         <div className="sideBarBox">
           <div className='img'>
             <div className="sidebarImg">
-                <img src={userInfo && userInfo.photoURL} alt="not found" />
+                <img src={data && data.photoURL} alt="not found" />
             </div>
-            <h2 className='sidbarName'>{userInfo && userInfo.displayName}</h2>
+            <h2 className='sidbarName'>{data && data.displayName}</h2>
           </div>
             <div className="sidebarcompnent">
               <ul className='navigation'>

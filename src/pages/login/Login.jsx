@@ -16,6 +16,8 @@ import Navauthentication from '../../Component/Navauthentication';
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import {useDispatch} from 'react-redux';
+import { loginUser } from '../../slices/userSlice';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -33,7 +35,8 @@ const initialValues = {
 }
 
 export default function BasicGrid() {
-
+  
+  const dispatch = useDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -43,7 +46,9 @@ export default function BasicGrid() {
     onSubmit : (values, action) => {
       signInWithEmailAndPassword(auth, values.email, values.password).then((userCredential) =>{
         if(userCredential.user.emailVerified){
+          localStorage.setItem('user', JSON.stringify(userCredential.user))
           navigate('./home')
+          dispatch(loginUser(userCredential.user))
         }else{
           signOut(auth).then(() => {
             console.log('signOut done');          
