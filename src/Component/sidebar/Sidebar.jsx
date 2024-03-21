@@ -1,4 +1,4 @@
-import React from 'react'
+import React  from 'react'
 import '../sidebar/sidebar.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logout from '../../images/logout.png'
@@ -8,20 +8,22 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { auth } from '../../firebase/FirebaseConfig'
 import { signOut, getAuth } from '@firebase/auth'
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../../slices/userSlice';
 
 
 const Sidebar = () => {
  const data = useSelector((state) => state.loginUserData.value) 
  const navigate = useNavigate();
  const auth = getAuth();
+ const dispatch = useDispatch();
 
 
   const handleLogout = async () =>{
     await signOut(auth);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    dispatch(loginUser(null))
     navigate("/")
     
   }
