@@ -1,29 +1,61 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import friendrequiest from '../../images/friendrequiest.jpg'
 import GroupCard from '../../Component/home/groupCard/GroupCard'
+import { getDatabase, ref, onValue, push, set, remove} from "firebase/database";
+import { useSelector, useDispatch } from 'react-redux';
+import '../friendRequest/friendRequest.css'
 
 const FriendRequest = () => {
+
+    const db = getDatabase();
+    const data = useSelector((state) => state.loginUserData.value);
+    const [fRequest, setFRequest] = useState ()
+
+    useEffect(()=>{
+        const fRequestRef = ref(db,'friendRequest');
+        onValue(fRequestRef,(snapshot) =>{
+          let arr = []
+          snapshot.forEach((item) =>{
+            if(data.uid == item.val().receiverid){
+              arr.push({...item.val(),id:item.key})
+            }
+          })
+          setFRequest(arr)
+        });
+      },[])
+
+      const handleCancelFRequest = (cancelInfo) =>{
+        console.log(cancelInfo);
+        remove(ref(db, 'friendRequest/' + cancelInfo.id))
+
+      }
+
   return (
     <div>
             <GroupCard cardtitle='Friend Requiest'>
-        {[0,1,2,3,4,5,6].map((item,index)=>(
+        {fRequest && fRequest.length > 0 ?
+        fRequest.map((item,index)=>(
         <div key={index} className='usermainbox'>
             <div className="userItem">
                 <div className="userimgBox">
-                    <img src={friendrequiest} alt="not found" />
+                    <img src={item.senderimg} alt="not found" />
                 </div>
                 <div className="userinfo">
                     <div className="userName">
-                    <h4>Kulsuma</h4>
+                    <h4>{item.sendername}</h4>
                     <p>Mern Developer</p>
                     </div>
-                    <div className="joinbtn">
+                    <div className="fRequestBTN">
                     <button>Accept</button>
+                    <button onClick={() => handleCancelFRequest(item)} >Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-        ))}
+        ))
+    :
+    <h2>Friend not available</h2>
+    }
         </GroupCard>
     </div>
   )

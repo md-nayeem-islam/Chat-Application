@@ -1,0 +1,15 @@
+.fRequestBTN{
+    display: flex;
+    gap: 7px;
+}
+.fRequestBTN button{
+    background-color: #5F35F5;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: 500;
+    border-radius: 10px;
+    border: none;
+}

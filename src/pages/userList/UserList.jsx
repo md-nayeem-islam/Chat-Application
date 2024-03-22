@@ -11,6 +11,7 @@ const UserList = () => {
   const [userList, setUserList] = useState();
   const db = getDatabase();
   const data = useSelector((state) => state.loginUserData.value);
+  // console.log(data);
 
   useEffect(()=>{
     const userRef = ref(db,'users');
@@ -31,7 +32,7 @@ const UserList = () => {
     console.log(fRequestInfo);
     set(push(ref(db,"friendRequest")),{
       senderid : data.uid,
-      sendername : data.username,
+      sendername : data.displayName,
       senderimg : data.photoURL,
       receiverid : fRequestInfo.id,
       receivername : fRequestInfo.username,
