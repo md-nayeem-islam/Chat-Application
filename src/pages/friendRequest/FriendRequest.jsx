@@ -27,7 +27,19 @@ const FriendRequest = () => {
       const handleCancelFRequest = (cancelInfo) =>{
         console.log(cancelInfo);
         remove(ref(db, 'friendRequest/' + cancelInfo.id))
+      }
 
+      const handleAcceptFRequest =(acceptInfo) =>{
+        set(push(ref(db,"Frieds")),{
+          friendid : acceptInfo.senderid,
+          friendname : acceptInfo.sendername,
+          friendimg : acceptInfo.senderimg,
+          receiverid : data.uid,
+          receivername : data.displayName,
+          receiverimg : data.photoURL,
+        }).then(()=>{
+          remove(ref(db, 'friendRequest/' + acceptInfo.id))
+        })
       }
 
   return (
@@ -46,7 +58,7 @@ const FriendRequest = () => {
                     <p>Mern Developer</p>
                     </div>
                     <div className="fRequestBTN">
-                    <button>Accept</button>
+                    <button onClick={() => handleAcceptFRequest(item)}>Accept</button>
                     <button onClick={() => handleCancelFRequest(item)} >Cancel</button>
                     </div>
                 </div>

@@ -29,7 +29,6 @@ const UserList = () => {
   // console.log(userList );
 
   let handleRequest = (fRequestInfo) =>{
-    console.log(fRequestInfo);
     set(push(ref(db,"friendRequest")),{
       senderid : data.uid,
       sendername : data.displayName,
