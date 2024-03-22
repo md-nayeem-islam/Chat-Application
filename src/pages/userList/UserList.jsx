@@ -3,7 +3,7 @@ import GroupCard from '../../Component/home/groupCard/GroupCard'
 import user from '../../images/user.jpg'
 import { FaPlus } from 'react-icons/fa'
 import './userlist.css'
-import { getDatabase, ref, onValue} from "firebase/database";
+import { getDatabase, ref, onValue, push, set} from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -25,7 +25,19 @@ const UserList = () => {
     });
   },[])
 
-  console.log(userList );
+  // console.log(userList );
+
+  let handleRequest = (fRequestInfo) =>{
+    console.log(fRequestInfo);
+    set(push(ref(db,"friendRequest")),{
+      senderid : data.uid,
+      sendername : data.username,
+      senderimg : data.photoURL,
+      receiverid : fRequestInfo.id,
+      receivername : fRequestInfo.username,
+      receiverimg : fRequestInfo.profileImg,
+    })
+  }
 
 
   return (
@@ -46,7 +58,7 @@ const UserList = () => {
                   <p>Mern Developer</p>
                   </div>
                   <div className="userbtn">
-                  <FaPlus />
+                  <button onClick={() => handleRequest(item)} ><FaPlus /></button>
                   </div>
               </div>
           </div>
