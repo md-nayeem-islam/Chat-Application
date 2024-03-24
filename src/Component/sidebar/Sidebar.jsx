@@ -10,9 +10,32 @@ import { auth } from '../../firebase/FirebaseConfig'
 import { signOut, getAuth } from '@firebase/auth'
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../../slices/userSlice';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { FaCloudUploadAlt } from "react-icons/fa";
+
 
 
 const Sidebar = () => {
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 350,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
  const data = useSelector((state) => state.loginUserData.value) 
  const navigate = useNavigate();
  const auth = getAuth();
@@ -32,10 +55,28 @@ const Sidebar = () => {
   // console.log(a);
   return (
     <>
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h3>Upload Profile Photo</h3>
+          <div className="imgHolder">
+          <img src={data && data.photoURL} alt="not found" />
+          </div>
+          <input type="file" />
+        </Box>
+      </Modal>
+    </div>
         <div className="sideBarBox">
           <div className='img'>
             <div className="sidebarImg">
                 <img src={data && data.photoURL} alt="not found" />
+                <div className="overLay" onClick={handleOpen}><FaCloudUploadAlt />
+</div>
             </div>
             <h2 className='sidbarName'>{data && data.displayName}</h2>
           </div>

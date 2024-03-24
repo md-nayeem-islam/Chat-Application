@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import friendrequiest from '../../images/friendrequiest.jpg'
 import GroupCard from '../../Component/home/groupCard/GroupCard'
 import { getDatabase, ref, onValue, push, set, remove} from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux';
 import '../friendRequest/friendRequest.css'
 
 const FriendRequest = () => {
-
     const db = getDatabase();
     const data = useSelector((state) => state.loginUserData.value);
     const [fRequest, setFRequest] = useState ()
