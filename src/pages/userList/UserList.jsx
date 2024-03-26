@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import GroupCard from '../../Component/home/groupCard/GroupCard'
-import user from '../../images/user.jpg'
 import { FaPlus } from 'react-icons/fa'
 import './userlist.css'
 import { getDatabase, ref, onValue, push, set} from "firebase/database";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 
 
 const UserList = () => {
   const [userList, setUserList] = useState();
   const db = getDatabase();
   const data = useSelector((state) => state.loginUserData.value);
-  // console.log(data);
+  const [fRequest, setFRequest] = useState ([])
 
   useEffect(()=>{
     const userRef = ref(db,'users');
@@ -26,7 +25,6 @@ const UserList = () => {
     });
   },[])
 
-  // console.log(userList );
 
   let handleRequest = (fRequestInfo) =>{
     set(push(ref(db,"friendRequest")),{
@@ -39,6 +37,20 @@ const UserList = () => {
     })
   }
 
+  useEffect(()=>{
+    const fRequestRef = ref(db,'friendRequest');
+    onValue(fRequestRef,(snapshot) =>{
+      let arr = []
+      snapshot.forEach((item) =>{
+        if(data.uid == item.val().senderid){
+          arr.push(item.val().senderid + item.val().receiverid)
+        }
+      })
+      setFRequest(arr)
+    });
+  },[])
+
+  console.log(fRequest);
 
   return (
     <>
@@ -57,9 +69,17 @@ const UserList = () => {
                   <h4>{item.username}</h4>
                   <p>Mern Developer</p>
                   </div>
-                  <div className="userbtn">
-                  <button onClick={() => handleRequest(item)} ><FaPlus /></button>
+
+                    {fRequest && fRequest.includes(item.id + data.uid) || fRequest.includes(data.uid + item.id)
+                    ?
+                    <div className="userbtn">
+                    <button onClick={() => handleRequest(item)} >cancel</button>
                   </div>
+                    :
+                    <div className="userbtn">
+                    <button onClick={() => handleRequest(item)} >add</button>
+                  </div>
+                    }
               </div>
           </div>
       </div>

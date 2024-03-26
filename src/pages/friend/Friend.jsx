@@ -16,7 +16,7 @@ const Friend = () => {
     onValue(friendRef,(snapshot) =>{
       let arr = []
       snapshot.forEach((item) =>{
-        if(data.uid != item.key){
+        if(data.uid == item.val().receiverid || data.uid == item.val().friendid){
           arr.push({...item.val(),id:item.key})
         }
       })
@@ -32,11 +32,16 @@ const Friend = () => {
     <div key={index} className='usermainbox'>
         <div className="userItem">
             <div className="userimgBox">
-                <img src={item.friendimg} alt="not found" />
+                <img src={data.uid == item.friendid ? item.receiverimg : item.friendimg} alt="not found" />
             </div>
             <div className="userinfo">
                 <div className="userName">
-                <h4>{item.friendname}</h4>
+                {data.uid == item.friendid 
+                ?
+                <h3>{item.receivename}</h3>
+                :
+                <h3>{item.friendname}</h3>
+                }
                 <p>Mern Developer</p>
                 </div>
                 <div className="btn">
@@ -54,4 +59,4 @@ const Friend = () => {
   )
 }
 
-export default Friend
+export default Friend 
