@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import friend from '../../images/friend.jpg'
 import GroupCard from '../../Component/home/groupCard/GroupCard'
 import { getDatabase, ref, onValue, push, set} from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux'; 
@@ -23,7 +22,6 @@ const Friend = () => {
       setfriendList(arr)
     });
   },[])
-  console.log(friendList);
 
   return (
     <div>
@@ -38,7 +36,7 @@ const Friend = () => {
                 <div className="userName">
                 {data.uid == item.friendid 
                 ?
-                <h3>{item.receivename}</h3>
+                <h3>{item.receivername}</h3>
                 :
                 <h3>{item.friendname}</h3>
                 }
